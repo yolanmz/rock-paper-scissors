@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>rock_paper_scissors</title>
+</head>
+<body>
+    <script>
+    function computerPlay(){
+        let number = Math.floor(Math.random()*3)
+        if(number==0){
+            return "rock"
+        }else if(number==1){
+            return "paper"
+        }else{
+            return "scissors"
+        }
+
+
+    }
+    function singleRound(playerSelection, computerSelection){
+        while (playerSelection.toLowerCase() !== "rock" && playerSelection.toLowerCase() !=="paper" &&
+         playerSelection.toLowerCase() !=="scissors"){
+            playerSelection = prompt("Correct your input:O")
+        }
+        if (computerSelection === playerSelection.toLowerCase()){
+            alert("It's a tie")
+        
+        }else if(playerSelection.toLowerCase()=== "paper"){
+            if(computerSelection === "scissors"){
+                alert ("YOU LOSE! Scissors beats Paper:(")
+                computerScore++
+            }else{
+                alert ("YOU WIN! Paper beats Rock:)")
+                playerScore++
+            }
+        }else if(playerSelection.toLowerCase() ==="rock"){
+            if(computerSelection === "paper"){
+                alert ("YOU LOSE! paper beats Rock:(")
+                computerScore++
+            }else{
+                alert ("YOU WIN! Rock beats Scissors:)")
+                playerScore++
+            }    
+        }else if(playerSelection.toLowerCase()=== "scissors"){
+            if(computerSelection === "rock"){
+                alert ("YOU LOSE! Rock beats Scissors:(")
+                computerScore++
+            }else{
+                alert ("YOU WIN! Scissors beats Paper:)")
+                playerScore++
+
+            }
+        }
+       
+    }
+    function game(){
+        for (let i=0; i<5; i++){
+        alert("This is round number " + i + "\n" + "Player score: " + playerScore + "\n" +
+         "Computer score: " + computerScore)
+        const pSelection = prompt("Choose Rock, Paper or Scissors")
+        const cSelection = computerPlay()
+        singleRound(pSelection, cSelection)
+        }
+        if (playerScore == computerScore){
+            alert("TIE. Try it again")
+        }else if (playerScore >= computerScore){
+            alert ("The winner is YOU!! Congratualtions XD")
+        }else{
+            alert("You LOSE. Try to win next time!")
+        }
+       
+        
+    }
+    playerScore = 0
+    computerScore = 0
+    game()
+    console.log(computerPlay())
+    </script>
+        
+</body>
+</html>
