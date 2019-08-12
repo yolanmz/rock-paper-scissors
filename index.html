@@ -3,8 +3,39 @@
 
 <head>
     <title>rock_paper_scissors</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>Rock, Paper, Scissors</h1>
+    <div id = "play">
+        <h2>Pick a button below to start</h2>
+        <img class="weapon" onclick="singleRound('rock', computerPlay())" src = "rock.jpg">
+        <img class="weapon" onclick="singleRound('paper', computerPlay())" src = "paper.jpg">
+        <img class="weapon" onclick="singleRound('scissors', computerPlay())" src = "scissors.jpg">
+    </div>
+
+    <form id = "result">
+        <div id = "display">
+
+            <h3>You -vs- Computer</h3> 
+            <div id = "resetItems">
+            <p>The number of rounds: <span id="totalRounds">0</span></p>
+            <p id = "txtMessage"></p>
+            <p>Round: <span id="roundCount">0</span></p>
+            <div id="scores">
+                <p>You: <span id = "playerScore">0</span>
+                   Computer: <span id = "computerScore">0</span>
+                   Tie: <span id ="tie">0</span>
+                </p>
+             </div>
+            </div>
+        </div>
+            <button id = "button" onclick = "resetButton()">Reset</button>
+        
+    </form>    
+
+    
+
     <script>
     function computerPlay(){
         let number = Math.floor(Math.random()*3)
@@ -18,64 +49,67 @@
 
 
     }
-    function singleRound(playerSelection, computerSelection){
-        while (playerSelection.toLowerCase() !== "rock" && playerSelection.toLowerCase() !=="paper" &&
-         playerSelection.toLowerCase() !=="scissors"){
-            playerSelection = prompt("Correct your input:O")
-        }
-        if (computerSelection === playerSelection.toLowerCase()){
-            alert("It's a tie")
+    function resetButton(){
+        document.getElementById("#result").reset();
         
-        }else if(playerSelection.toLowerCase()=== "paper"){
-            if(computerSelection === "scissors"){
-                alert ("YOU LOSE! Scissors beats Paper:(")
-                computerScore++
-            }else{
-                alert ("YOU WIN! Paper beats Rock:)")
-                playerScore++
-            }
-        }else if(playerSelection.toLowerCase() ==="rock"){
-            if(computerSelection === "paper"){
-                alert ("YOU LOSE! paper beats Rock:(")
-                computerScore++
-            }else{
-                alert ("YOU WIN! Rock beats Scissors:)")
-                playerScore++
-            }    
-        }else if(playerSelection.toLowerCase()=== "scissors"){
-            if(computerSelection === "rock"){
-                alert ("YOU LOSE! Rock beats Scissors:(")
-                computerScore++
-            }else{
-                alert ("YOU WIN! Scissors beats Paper:)")
-                playerScore++
+    }
+    let round = 0;
+        cScore = 0;
+        pScore = 0;
+        t = 0;
+    
+    const totalRounds = document.querySelector('#totalRounds');
+    totalRounds.textContent = prompt("Enter the number of rounds you want to play");
+    
 
+    function singleRound(playerSelection, computerSelection){
+        const roundCount = document.querySelector("#roundCount");
+        const playerScore = document.querySelector('#playerScore');
+        const txtMessage = document.querySelector('#txtMessage');
+        const computerScore = document.querySelector('#computerScore');
+        const tie = document.querySelector('#tie');
+        
+        if (computerSelection === playerSelection){
+            txtMessage.textContent = "It's a tie!"
+            t++;
+            tie.textContent = t;
+        }else if((playerSelection=== "paper" && computerSelection === "scissors")||
+                (playerSelection ==="rock" && computerSelection === "paper")||
+                (playerSelection=== "scissors" && computerSelection === "rock")){
+                cScore++;
+                computerScore.textContent = cScore;
+                txtMessage.textContent = "YOU LOSE:(";
+        }else{  
+                pScore++;
+                playerScore.textContent = pScore;
+                txtMessage.textContent = "YOU WIN:)";
+           
+            }
+        round++;
+        roundCount.textContent = round;
+        gameEnd();
+       
+    }
+    function gameEnd(){
+        const resetItems = document.querySelector("#resetItems");
+        if (round == totalRounds.textContent){
+            if (pScore > cScore){
+                
+                alert( "Final result: \n\nYour Score: " + pScore + "\nComputer Score: "
+                + cScore + "\nTie: " + t + "\nCONGRATULATIONS! YOU WIN THE GAME!!");
+                
+                resetItems.remove();
+            }else if(pScore == cScore){
+                alert("TIE! VERY CLOSE TO WIN THE GAME!")
+                resetItems.remove();
+            }else{
+                alert( "Final result: \n\nYour Score: " + pScore + "\nComputer Score: "
+                + cScore + "\nTie: " + t + "\nOH NO! TRY AGAIN NEXT TIME.");
+                resetItems.remove();
             }
         }
-       
     }
-    function game(){
-        for (let i=0; i<5; i++){
-        alert("This is round number " + i + "\n" + "Player score: " + playerScore + "\n" +
-         "Computer score: " + computerScore)
-        const pSelection = prompt("Choose Rock, Paper or Scissors")
-        const cSelection = computerPlay()
-        singleRound(pSelection, cSelection)
-        }
-        if (playerScore == computerScore){
-            alert("TIE. Try it again")
-        }else if (playerScore >= computerScore){
-            alert ("The winner is YOU!! Congratualtions XD")
-        }else{
-            alert("You LOSE. Try to win next time!")
-        }
-       
-        
-    }
-    playerScore = 0
-    computerScore = 0
-    game()
-    console.log(computerPlay())
+    
     </script>
         
 </body>
